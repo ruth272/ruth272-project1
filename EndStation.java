@@ -16,7 +16,7 @@ public class EndStation extends Station {
         } else {
             prevName = getPrev().getName();
         }
-        if (getNext() == null || getNext() == this) {
+        if (getNext() == null ) {
             nextName = "none";
         } else {
             nextName = getNext().getName();
@@ -26,11 +26,11 @@ public class EndStation extends Station {
     }
 
     public void makeEnd() {
-        if (prev != null) {
-            prev.addPrev(this); 
+        if (prev == null) {
+            prev = next; 
         }
-        if(next != null) {
-            next.addNext(this); 
+        if(next == null) {
+            next = prev;
         }
     }
 

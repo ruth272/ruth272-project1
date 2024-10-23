@@ -50,7 +50,7 @@ public class Station {
         } else {
             prevName = getPrev().getName();
         }
-        if (getNext() == null || getNext() == this) {
+        if (getNext() == null ) {
             nextName = "none";
         } else {
             nextName = getNext().getName();
@@ -86,17 +86,36 @@ public class Station {
     public int tripLength(Station destination) {
         int stops = 0;
         Station current = this;
-    
-        while (current != null && !current.equals(destination)) {
-            current = current.getNext();
-            stops++;
+
+        if (this.equals(destination)) {
+            return stops;
         }
     
-        if (current == null) {
-            return -1;  
+        if (this.getNext() == null) {
+            return -1;
         }
     
-        return stops;
+        return tripLengthRecurse(destination, stops, current);
+    }
+
+    public int tripLengthRecurse(Station destination, int stops, Station current) {
+        if (this.equals(destination)) {
+            return stops;
+        }
+    
+        if (this.getNext() == null) {
+            return -1;
+        }
+
+        /*for(int i=0; current instanceof TransferStation; i++){
+            String desColor = destination.getColor();
+            if(current.getColor().equals(desColor)){
+                return tripLengthRecurse(destination, stops + 1, current.getNext());
+            }
+        }*/
+        //if at transfer stations( more than one nextstop, compare the colors)
+        
+        return tripLengthRecurse(destination, stops + 1, current.getNext());
     }
 
     public boolean equals(Station obj) {
