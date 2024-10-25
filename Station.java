@@ -87,42 +87,60 @@ public class Station {
         int stops = 0;
         Station current = this;
 
-        if (this.equals(destination)) {
+        if (current.equals(destination)) {
             return stops;
         }
-    
-        if (this.getNext() == null) {
+        /*if(current.next == null) {
             return -1;
-        }
+        }*/
     
-        return tripLengthRecurse(destination, stops, current);
+        ArrayList <Station> visited = new ArrayList<>();
+        return tripLengthRecurse(destination, stops, current, visited);
     }
 
-    public int tripLengthRecurse(Station destination, int stops, Station current) {
-        if (this.equals(destination)) {
+    public int tripLengthRecurse(Station destination, int stops, Station current, ArrayList <Station> visited) {
+        if (current.equals(destination)) {
             return stops;
         }
     
-        if (this.getNext() == null) {
+        /*if (current.getNext() == null || !(current instanceof TransferStation)) {
+            return stops;
+        }
+        if(visited.contains(current)) {
             return -1;
+        }*/
+
+        visited.add(current);
+
+        if (current.getNext() != null && !visited.contains(current.getNext())) {
+            int trip = tripLengthRecurse(destination, stops + 1, current.getNext(), visited);
+            if (trip != -1) {
+                return trip;
+            }
         }
 
-        /*for(int i=0; current instanceof TransferStation; i++){
+        if(current instanceof TransferStation){
             String desColor = destination.getColor();
-            if(current.getColor().equals(desColor)){
-                return tripLengthRecurse(destination, stops + 1, current.getNext());
+            TransferStation transfer = (TransferStation) current;
+            for(int i=0; i < transfer.otherStations.size(); i++){
+                Station now = transfer.otherStations.get(i);
+                if(now.getColor() == desColor){
+                    int trip = tripLengthRecurse(destination, stops + 1, transfer, visited);
+                    if(trip != -1) {
+                        return trip;
+                    }
+                }
             }
-        }*/
+        }
         //if at transfer stations( more than one nextstop, compare the colors)
         
-        return tripLengthRecurse(destination, stops + 1, current.getNext());
+        return -1;
     }
 
     public boolean equals(Station obj) {
         if (this.color != obj.color || this.name != obj.name) {
             return false;
         } 
-
         return true;
     }
 }

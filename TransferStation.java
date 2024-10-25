@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class TransferStation extends Station {
-    public List<Station> otherStations;
+    public ArrayList<Station> otherStations;
 
     public TransferStation (String color, String name) {
         super(color,name);
@@ -10,20 +10,13 @@ public class TransferStation extends Station {
     }
 
     public void addTransferStationNext(Station station) {
-        otherStations.add(station);
-        station.addNext(this); 
+        this.otherStations.add(station);
+        station.addNext(this);
     }
     
     public void addTransferStationPrev(Station station) {
-        otherStations.add(station);
-        station.addPrev(this); 
-    }
-
-    public void otherStations(Station station) {
-        if (!otherStations.contains(station)) {
-            otherStations.add(station);
-            station.addNext(this); 
-        } 
+        this.otherStations.add(station);
+        station.addPrev(this);
     }
 
     public String toString() {
@@ -36,30 +29,32 @@ public class TransferStation extends Station {
             prevName = getPrev().getName();
         }
         if (getNext() == null ) {
-            nextName = "none" + "\n" +"\t" +"Transfers:" + " " + "\n";
+            nextName = "none";
         } else {
             nextName = getNext().getName();
         }
+        String list = "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
+        ", previous station: " + prevName + ", next station: " + nextName + "\n" +"\t" +"Transfers:" + " " + "\n";
         for(int i=0; i<otherStations.size(); i++){
-            /*if( i==0) {
+            list += "\t" + otherStations.get(i).toString() + "\n";
+            /*if(i==0) {
                 return "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + nextName + "\n";
-            }*/
+               ", previous station: " + prevName + ", next station: " + nextName + "\n" +"\t" +"Transfers:" + " " + "\n";
+            }
             if(i==1) {
                 return "\t" + "STATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + prevName + "\n";
+               ", previous station: " + prevName + ", next station: " + nextName + "\n";
             }
             else if(i==2) {
                 return "\t" + "ENDSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + prevName + "\n";
+               ", previous station: " + prevName + ", next station: " + nextName + "\n";
             }
             else if(i==3) {
                 return "\t" + "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + prevName + "\n";
-            }
+               ", previous station: " + prevName + ", next station: " + nextName + "\n";
+            }*/
         }
-        return "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + prevName + "\n";
+        return list;
     }
 
 }
