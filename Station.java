@@ -59,33 +59,23 @@ public class Station {
         ", previous station: " + prevName + ", next station: " + nextName;    
     }
 
-    public void addNext(Station nextStation) {
-        if(nextStation == null){
-            nextStation = null;
-        }
-        else {
-            this.next = nextStation;
-            nextStation.prev = this; 
+    public void addNext(Station next) {
+        this.next = next;
+        if(next.prev == null){
+            next.prev = this;
         }
     }
 
-    public void addPrev(Station prevStation) {
-        if(prevStation == null){
-            prevStation = null;
-        }
-        else {
-            this.prev = prevStation;
-            prevStation.next = this;        
+    public void addPrev(Station prev) {
+        this.prev = prev;
+        if(prev.next == null){
+            prev.next = this;
         }
     }
 
     public void connect(Station nextStation) {
         this.addNext(nextStation);
         nextStation.addPrev(this);
-        /*if (nextStation != null) {
-            this.next = nextStation;
-            nextStation.prev = this;
-        }*/
     }
 
     public int tripLength(Station destination) {

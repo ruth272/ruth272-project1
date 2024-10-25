@@ -10,21 +10,19 @@ public class TransferStation extends Station {
     }
 
     public void addTransferStationNext(Station station) {
-        /*this.otherStations.add(station);
-        station.addNext(this);*/
-        this.otherStations.add(station);
-        if (station.getPrev() == null /*|| !station.prev.equals(this*/) {
+        if (station.prev == null) {
             station.prev = this;
         }
+        this.otherStations.add(station);
+
     }
     
     public void addTransferStationPrev(Station station) {
-        /*this.otherStations.add(station);
-        station.addPrev(this);*/
-        this.otherStations.add(station);
-        if (station.getNext() == null /*!station.next.equals(this)*/) {
+        if (station.next == null) {
             station.next = this;
         }
+        this.otherStations.add(station);
+
     }
 
     public String toString() {
@@ -45,22 +43,6 @@ public class TransferStation extends Station {
         ", previous station: " + prevName + ", next station: " + nextName + "\n" +"\t" +"Transfers:" + " " + "\n";
         for(int i=0; i<otherStations.size(); i++){
             list += "\t" + otherStations.get(i).toString() + "\n";
-            /*if(i==0) {
-                return "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + nextName + "\n" +"\t" +"Transfers:" + " " + "\n";
-            }
-            if(i==1) {
-                return "\t" + "STATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + nextName + "\n";
-            }
-            else if(i==2) {
-                return "\t" + "ENDSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + nextName + "\n";
-            }
-            else if(i==3) {
-                return "\t" + "TRANSFERSTATION " + getName() + ": " + getColor() + " line, in service: " + isAvailable() + 
-               ", previous station: " + prevName + ", next station: " + nextName + "\n";
-            }*/
         }
         return list;
     }

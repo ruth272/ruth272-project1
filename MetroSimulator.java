@@ -75,9 +75,6 @@ public class MetroSimulator{
         farragut_west.connect(mcpherson_square);
         mcpherson_square.connect(metro_center);
 		metro_center.connect(federal_triangle);
-		//metro_center.addTransferStationNext(federal_triangle);
-		//metro_center.addPrev(mcpherson_square);
-		//metro_center.addNext(federal_triangle);
         federal_triangle.connect(smithsonian);
 		va_square.makeEnd();
 		smithsonian.makeEnd();
@@ -90,6 +87,8 @@ public class MetroSimulator{
         dupont_circle.connect(farragut_north);
 		metro_center.addTransferStationNext(farragut_north);
         metro_center.addTransferStationPrev(gallery_place);
+		gallery_place.addPrev(metro_center);
+		farragut_north.addNext(metro_center);
 		gallery_place.connect(judiciary_square);
 		woodley_park.makeEnd();
 		judiciary_square.makeEnd();
@@ -101,6 +100,8 @@ public class MetroSimulator{
 		s2.connect(s3);
 		metro_center.addTransferStationPrev(s3);
 		metro_center.addTransferStationNext(s4);
+		s4.addNext(s5);
+		s3.addPrev(s2);		
 		s4.connect(s5);
 		s1.makeEnd();
 		s5.makeEnd();
