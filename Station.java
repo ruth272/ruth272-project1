@@ -29,8 +29,8 @@ public class Station {
         return flag;
     }
 
-    public void switchAvailable() {
-        this.flag = !this.flag;
+    public boolean switchAvailable() {
+        return this.flag = !this.flag;
     }
 
     public Station getNext() {
@@ -61,7 +61,7 @@ public class Station {
 
     public void addNext(Station nextStation) {
         if(nextStation == null){
-            this.next = null;
+            nextStation = null;
         }
         else {
             this.next = nextStation;
@@ -71,7 +71,7 @@ public class Station {
 
     public void addPrev(Station prevStation) {
         if(prevStation == null){
-            this.prev = null;
+            prevStation = null;
         }
         else {
             this.prev = prevStation;
@@ -81,6 +81,11 @@ public class Station {
 
     public void connect(Station nextStation) {
         this.addNext(nextStation);
+        nextStation.addPrev(this);
+        /*if (nextStation != null) {
+            this.next = nextStation;
+            nextStation.prev = this;
+        }*/
     }
 
     public int tripLength(Station destination) {
@@ -90,29 +95,27 @@ public class Station {
         if (current.equals(destination)) {
             return stops;
         }
-        /*if(current.next == null) {
-            return -1;
-        }*/
-    
+
         ArrayList <Station> visited = new ArrayList<>();
         return tripLengthRecurse(destination, stops, current, visited);
     }
 
     public int tripLengthRecurse(Station destination, int stops, Station current, ArrayList <Station> visited) {
+        if (current == null) {
+            return -1;
+        }
+        
         if (current.equals(destination)) {
             return stops;
         }
     
-        /*if (current.getNext() == null || !(current instanceof TransferStation)) {
-            return stops;
-        }
-        if(visited.contains(current)) {
+        if (visited.contains(current)) {
             return -1;
-        }*/
+        }
 
         visited.add(current);
 
-        if (current.getNext() != null && !visited.contains(current.getNext())) {
+        if (current.getNext() != null) {
             int trip = tripLengthRecurse(destination, stops + 1, current.getNext(), visited);
             if (trip != -1) {
                 return trip;
@@ -125,14 +128,13 @@ public class Station {
             for(int i=0; i < transfer.otherStations.size(); i++){
                 Station now = transfer.otherStations.get(i);
                 if(now.getColor() == desColor){
-                    int trip = tripLengthRecurse(destination, stops + 1, transfer, visited);
+                    int trip = tripLengthRecurse(destination, stops + 1, now, visited);
                     if(trip != -1) {
                         return trip;
                     }
                 }
             }
         }
-        //if at transfer stations( more than one nextstop, compare the colors)
         
         return -1;
     }

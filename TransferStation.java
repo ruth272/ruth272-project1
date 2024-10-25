@@ -10,13 +10,21 @@ public class TransferStation extends Station {
     }
 
     public void addTransferStationNext(Station station) {
+        /*this.otherStations.add(station);
+        station.addNext(this);*/
         this.otherStations.add(station);
-        station.addNext(this);
+        if (station.getPrev() == null /*|| !station.prev.equals(this*/) {
+            station.prev = this;
+        }
     }
     
     public void addTransferStationPrev(Station station) {
+        /*this.otherStations.add(station);
+        station.addPrev(this);*/
         this.otherStations.add(station);
-        station.addPrev(this);
+        if (station.getNext() == null /*!station.next.equals(this)*/) {
+            station.next = this;
+        }
     }
 
     public String toString() {
